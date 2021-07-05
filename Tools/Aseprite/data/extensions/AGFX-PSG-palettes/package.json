@@ -1,0 +1,16 @@
+{
+  "name": "AGFX-PSG-palettes",
+  "displayName": "AGFX-PSG.gpl Palette",
+  "description": "Palettes for create sprite generator mask",
+  "version": "1.0",
+  "author": { "name": "AndyGFX", "url": "http://andygfx.com/" },
+  "publisher": "AndyGFX",
+  "categories": [
+    "Palettes"
+  ],
+  "contributes": {
+    "palettes": [
+      { "id": "AGFX-PSG", "path": "./AGFX-PSG.gpl" }
+    ]
+  }
+}
