@@ -39,6 +39,9 @@ func _physics_process(delta):
 		
 		if !self.slide_wall:
 			next_move.y = 0
+		else:
+			if velocity.y < 20:
+				velocity.y = 20
 
 		if(is_jump_pressed):
 			# Raycasts would probably be a better solution here but this works
@@ -46,7 +49,7 @@ func _physics_process(delta):
 			if($AnimatedSprite.flip_h):
 				next_move.x = wall_jump_horizontal_impulse
 			else:
-				next_move.x = -wall_jump_horizontal_impulse				
+				next_move.x = -wall_jump_horizontal_impulse
 			next_move.y -= jump_impulse
 	else:
 		next_move.y += gravity

@@ -2,11 +2,13 @@
 
 importer="aseprite.wizard.plugin"
 type="SpriteFrames"
-valid=false
+path="res://.import/Roboto.aseprite-5d6a1728b60484c93ef364db347374b8.res"
 
 [deps]
 
 source_file="res://Entities/Player/Sprites/Roboto.aseprite"
+dest_files=[ "res://.import/Roboto.aseprite-5d6a1728b60484c93ef364db347374b8.res" ]
+
 [params]
 
 split_layers=false

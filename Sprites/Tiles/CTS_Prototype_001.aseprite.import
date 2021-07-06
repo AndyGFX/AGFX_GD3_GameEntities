@@ -2,11 +2,13 @@
 
 importer="aseprite.wizard.plugin"
 type="SpriteFrames"
-valid=false
+path="res://.import/CTS_Prototype_001.aseprite-4eb105926cc995fba9e51e3323059de7.res"
 
 [deps]
 
 source_file="res://Sprites/Tiles/CTS_Prototype_001.aseprite"
+dest_files=[ "res://.import/CTS_Prototype_001.aseprite-4eb105926cc995fba9e51e3323059de7.res" ]
+
 [params]
 
 split_layers=false
