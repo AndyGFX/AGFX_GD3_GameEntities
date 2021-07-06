@@ -5,6 +5,7 @@ export(float) var max_speed = 150
 export(float) var friction = 0.5
 export(float) var gravity = 300
 export(float) var jump = 150
+export(float) var wall_slide_speed = 30
 export(float) var resistance = 0.7
 export(float) var spring = 300
 export(Vector2) var velocity = Vector2.ZERO
@@ -48,7 +49,10 @@ func _physics_process(delta):
 			self.on_air = true;
 			velocity.y -= jump
 			self.jumpNumber -=1
-			sprite.play("Jump");
+				
+			if velocity.x !=0:
+				sprite.play("Jump");
+			
 	else:
 		if movement_x == 0:
 			velocity.x = lerp(velocity.x,0,resistance)
@@ -58,7 +62,11 @@ func _physics_process(delta):
 	
 	if (velocity.y>0):
 		sprite.play("Fall")
+	
+	if is_on_wall():
+		if velocity.y>30:
+			velocity.y = self.wall_slide_speed
+		sprite.play("WallSlide");
 		
 func ApplySpring(value:float):	
 	velocity.y = -value 
-	

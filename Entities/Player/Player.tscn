@@ -21,15 +21,3 @@ shape = SubResource( 1 )
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 smoothing_enabled = true
-
-[node name="RayCast_RIGHTWALL" type="RayCast2D" parent="."]
-position = Vector2( 0, 8 )
-rotation = -1.5708
-enabled = true
-cast_to = Vector2( 0, 8 )
-
-[node name="RayCast_LEFTWALL" type="RayCast2D" parent="."]
-position = Vector2( 0, 8 )
-rotation = 1.5708
-enabled = true
-cast_to = Vector2( 0, 8 )

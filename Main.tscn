@@ -10,7 +10,7 @@
 [node name="ent_Level_000" parent="." instance=ExtResource( 1 )]
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 80, 48 )
+position = Vector2( 360, 48 )
 speed = 350.0
 max_speed = 100.0
 friction = 0.2
