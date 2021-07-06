@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Entities/BreakingPlatform/Animation/BreakingPlatform.res" type="SpriteFrames" id=1]
-[ext_resource path="res://Entities/BreakingPlatform/BreakingPlatform.gd" type="Script" id=2]
+[ext_resource path="res://Entities/BreakingPlatform/Script/BreakingPlatform.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 18.8763, 8.57737 )

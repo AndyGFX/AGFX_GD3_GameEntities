@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Entities/Level/ent_Level_000.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Entities/Player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Entities/BreakingPlatform/BreakingPlatform.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Entities/Spring/Spring.tscn" type="PackedScene" id=4]
 
 [node name="Main" type="Node2D"]
 
@@ -18,3 +19,6 @@ resistance = 0.1
 
 [node name="BreakingPlatform" parent="." instance=ExtResource( 3 )]
 position = Vector2( 192, 80 )
+
+[node name="Spring" parent="." instance=ExtResource( 4 )]
+position = Vector2( 136, 88 )

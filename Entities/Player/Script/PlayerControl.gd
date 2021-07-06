@@ -6,6 +6,7 @@ export(float) var friction = 0.5
 export(float) var gravity = 300
 export(float) var jump = 150
 export(float) var resistance = 0.7
+export(float) var spring = 300
 export(Vector2) var velocity = Vector2.ZERO
 
 var jumpNumber:int = 2
@@ -13,6 +14,7 @@ var on_air:bool = false
 onready var sprite = $AnimatedSprite
 
 func _ready():
+	Globals.player = self
 	pass
 
 
@@ -55,4 +57,8 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity,Vector2.UP)
 	
 	if (velocity.y>0):
-		sprite.play("Fall");	
+		sprite.play("Fall")
+		
+func ApplySpring(value:float):	
+	velocity.y = -value 
+	
