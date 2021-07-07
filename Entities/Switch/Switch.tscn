@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Entities/Switch/Animation/Switch.res" type="SpriteFrames" id=1]
+[ext_resource path="res://Entities/Switch/Script/Switch.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 4.17588, 4.14909 )
+
+[node name="Switch" type="Area2D"]
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = ExtResource( 1 )
+animation = "Idle"
+frame = 4
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -0.393726, -2.04737 )
+shape = SubResource( 1 )

@@ -8,14 +8,15 @@ export(float) var jump = 150
 export(float) var wall_slide_speed = 20
 export(float) var resistance = 0.7
 export(float) var spring = 300
-export(int) var maxJumpCount = 1
 export(Vector2) var velocity = Vector2.ZERO
 
-export(Globals.eMovementState) var mState
+export(int) var maxJumpCount = 1
+export(bool) var wallSlide = true
+
+
 
 var movement:float = 0
 var jumpCount:int = 0
-
 var isOnGround:bool = false
 var isOnWall:bool = false
 var isOnAir:bool = false
@@ -81,7 +82,7 @@ func _physics_process(delta):
 	print(self.jumpCount)
 	
 	# ? is on WALL 
-	if self.isOnWall:
+	if self.isOnWall and self.wallSlide:
 		if velocity.y>30:
 			velocity.y = self.wall_slide_speed
 	
@@ -119,8 +120,9 @@ func SetupMovementState():
 				self.animation_state = Globals.eAnimationState.IDLE
 	else:
 		if self.velocity.y>0:
+			
 			if self.isOnWall:
-				self.animation_state = Globals.eAnimationState.WALLSLIDE
+				if self.wallSlide: self.animation_state = Globals.eAnimationState.WALLSLIDE
 			else:
 				self.animation_state = Globals.eAnimationState.FALL
 			
