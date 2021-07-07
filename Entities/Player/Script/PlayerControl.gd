@@ -59,17 +59,19 @@ func _physics_process(delta):
 	else:
 		# slow down when key isn't pressed
 		velocity.x = lerp(velocity.x,0,friction)
+
+	# ? and is jump key pressed ?
+	if Input.is_action_just_pressed("player_jump") and (self.jumpCount>1):
+		self.inJumping = true
+		self.velocity.y -= self.jump
+		self.jumpCount -= 1
+		pass
+
 	
 	# ? is on GROUND 
 	if self.isOnGround:
 		self.inJumping = false
 		self.jumpCount = self.maxJumpCount;
-		
-		# ? and is jump key pressed ?
-		if Input.is_action_just_pressed("player_jump"):
-			self.inJumping = true
-			self.velocity.y -= self.jump
-			pass
 		
 		# ? and is crunch key pressed ?
 		if Input.is_action_just_pressed("player_crunch"):
