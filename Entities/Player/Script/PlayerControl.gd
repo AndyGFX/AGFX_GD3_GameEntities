@@ -8,12 +8,12 @@ export(float) var jump = 150
 export(float) var wall_slide_speed = 20
 export(float) var resistance = 0.7
 export(float) var spring = 300
+export(int) var maxJumpCount = 1
 export(Vector2) var velocity = Vector2.ZERO
 
 export(Globals.eMovementState) var mState
 
 var movement:float = 0
-var maxJumpCount:int = 2
 var jumpCount:int = 0
 
 var isOnGround:bool = false
@@ -59,14 +59,6 @@ func _physics_process(delta):
 	else:
 		# slow down when key isn't pressed
 		velocity.x = lerp(velocity.x,0,friction)
-
-	# ? and is jump key pressed ?
-	if Input.is_action_just_pressed("player_jump") and (self.jumpCount>1):
-		self.inJumping = true
-		self.velocity.y -= self.jump
-		self.jumpCount -= 1
-		pass
-
 	
 	# ? is on GROUND 
 	if self.isOnGround:
@@ -78,7 +70,15 @@ func _physics_process(delta):
 			self.inCrunch = !self.inCrunch
 			pass
 			
-		pass
+	# ? and is jump key pressed ?
+	if Input.is_action_just_pressed("player_jump"):
+		if (self.jumpCount>0):
+			self.inJumping = true
+			self.velocity.y -= self.jump
+			self.jumpCount -= 1
+	
+	
+	print(self.jumpCount)
 	
 	# ? is on WALL 
 	if self.isOnWall:
