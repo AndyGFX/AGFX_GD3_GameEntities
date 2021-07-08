@@ -10,7 +10,7 @@ func _ready():
 	pass # Replace with function body.
 	
 func BodyEnteregToSwitch(body):
-	if (body.name=="Player"):
+	if (body.name==Globals.playerObjectName):
 		$AnimatedSprite.play("Active")
 		
 		if (self.targetObjectName!="undefined"):

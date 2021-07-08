@@ -34,5 +34,6 @@ const pickupVFX = preload("res://Entities/Items/PickupAnimation/PickedVFX.tscn")
 # ---------------------------------------------------------------------------
 
 var player = null
+var playerObjectName = "undefined" # is set from GameManager script
 var container = null
 

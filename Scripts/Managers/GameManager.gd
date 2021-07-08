@@ -32,14 +32,16 @@ func _ready():
 	# --------------------------------------------------------------------------
 	
 	Globals.player = Utils.FindNode(self.playerObjectName)
+	Globals.playerObjectName = self.playerObjectName
 	
 	# --------------------------------------------------------------------------
 	# GameData
 	# --------------------------------------------------------------------------
 	
 	if self.resetGameData:
-		GameData.Set('coins',0)
-		GameData.Set('health',50)
+		GameData.Set('COIN',0)
+		GameData.Set('HEALTH',50)
+		GameData.Set('AMMO',15)
 		GameData.Save()
 		
 	GameData.Load()

@@ -1,0 +1,22 @@
+{ "frames": [
+   {
+    "filename": "HUD_Coins_bkg.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.27-x64",
+  "image": "HUD_Coins_bkg.png",
+  "format": "RGBA8888",
+  "size": { "w": 48, "h": 16 },
+  "scale": "1",
+  "frameTags": [
+  ]
+ }
+}

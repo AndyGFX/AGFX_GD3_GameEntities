@@ -8,7 +8,7 @@ func _ready():
 	pass # Replace with function body.
 	
 func BodyEnteregToSpring(body):
-	if (body.name=="Player"):
+	if (body.name==Globals.playerObjectName):
 		$AnimatedSprite.play("Spring")
 		Globals.player.ApplySpring(springImpulse)
 		yield($AnimatedSprite,"animation_finished")
