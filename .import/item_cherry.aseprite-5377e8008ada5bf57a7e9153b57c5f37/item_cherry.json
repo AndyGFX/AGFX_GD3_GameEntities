@@ -1,0 +1,76 @@
+{ "frames": [
+   {
+    "filename": "item_cherry 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 21, "h": 21 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 21, "h": 21 },
+    "sourceSize": { "w": 21, "h": 21 },
+    "duration": 100
+   },
+   {
+    "filename": "item_cherry 1.aseprite",
+    "frame": { "x": 21, "y": 0, "w": 21, "h": 21 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 21, "h": 21 },
+    "sourceSize": { "w": 21, "h": 21 },
+    "duration": 100
+   },
+   {
+    "filename": "item_cherry 2.aseprite",
+    "frame": { "x": 42, "y": 0, "w": 21, "h": 21 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 21, "h": 21 },
+    "sourceSize": { "w": 21, "h": 21 },
+    "duration": 100
+   },
+   {
+    "filename": "item_cherry 3.aseprite",
+    "frame": { "x": 63, "y": 0, "w": 21, "h": 21 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 21, "h": 21 },
+    "sourceSize": { "w": 21, "h": 21 },
+    "duration": 100
+   },
+   {
+    "filename": "item_cherry 4.aseprite",
+    "frame": { "x": 84, "y": 0, "w": 21, "h": 21 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 21, "h": 21 },
+    "sourceSize": { "w": 21, "h": 21 },
+    "duration": 100
+   },
+   {
+    "filename": "item_cherry 5.aseprite",
+    "frame": { "x": 105, "y": 0, "w": 21, "h": 21 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 21, "h": 21 },
+    "sourceSize": { "w": 21, "h": 21 },
+    "duration": 100
+   },
+   {
+    "filename": "item_cherry 6.aseprite",
+    "frame": { "x": 126, "y": 0, "w": 21, "h": 21 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 21, "h": 21 },
+    "sourceSize": { "w": 21, "h": 21 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.27-x64",
+  "image": "item_cherry.png",
+  "format": "RGBA8888",
+  "size": { "w": 147, "h": 21 },
+  "scale": "1",
+  "frameTags": [
+  ]
+ }
+}

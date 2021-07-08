@@ -46,3 +46,22 @@ func LoadJSON(path):
 	load_file.open(path, File.READ)
 	return parse_json(load_file.get_as_text())	
 	pass
+	
+func CreateTimer(wait_time, target, method, start):
+	var timer = Timer.new()
+	timer.set_wait_time(wait_time)
+	timer.set_one_shot(true)
+	timer.connect("timeout", target, method)
+	add_child(timer)
+	if start: timer.start()
+	return timer
+	pass 
+	
+func GetSceneRoot():
+	return get_tree().get_root()	
+
+func Instantiate(object,pos):
+	var _instance = object.instance()
+	_instance.set_position(pos)
+	Utils.FindNode("Container").add_child(_instance)
+	return _instance

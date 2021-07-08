@@ -78,9 +78,6 @@ func _physics_process(delta):
 			self.velocity.y -= self.jump
 			self.jumpCount -= 1
 	
-	
-	print(self.jumpCount)
-	
 	# ? is on WALL 
 	if self.isOnWall and self.wallSlide:
 		if velocity.y>30:

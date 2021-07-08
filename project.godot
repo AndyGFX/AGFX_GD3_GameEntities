@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Area2D",
+"class": "ItemEntity",
+"language": "GDScript",
+"path": "res://Entities/Items/Common/ItemEntity.gd"
+}, {
 "base": "Reference",
 "class": "JSONBeautifier",
 "language": "GDScript",
@@ -20,6 +25,7 @@ _global_script_classes=[ {
 "path": "res://Scripts/TilesetBuilder/TilesetBuilder.gd"
 } ]
 _global_script_class_icons={
+"ItemEntity": "",
 "JSONBeautifier": "",
 "TilesetBuilder": ""
 }
@@ -34,6 +40,7 @@ config/icon="res://icon.png"
 
 Globals="*res://Scripts/Globals.gd"
 Utils="*res://Scripts/Utils/Utils.gd"
+GameData="*res://Scripts/Utils/GameData.gd"
 
 [display]
 

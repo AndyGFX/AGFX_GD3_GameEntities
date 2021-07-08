@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Entities/Items/Item_Coin/Animation/Item_Diamond.res" type="SpriteFrames" id=1]
+[ext_resource path="res://Entities/Items/Item_Coin/Script/Item_COIN.gd" type="Script" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+
+[node name="ItemEntity" type="Area2D"]
+script = ExtResource( 2 )
+item_type = "COIN"
+item_limit = 999999
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = ExtResource( 1 )
+animation = "Shine"
+playing = true

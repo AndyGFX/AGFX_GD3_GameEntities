@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Entities/Items/Item_Health/Animation/item_cherry.res" type="SpriteFrames" id=1]
+[ext_resource path="res://Entities/Items/Item_Health/Script/Item_HEALTH.gd" type="Script" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 6.78731
+
+[node name="Item_HEALTH" type="Area2D"]
+script = ExtResource( 2 )
+item_type = "HEALTH"
+item_amount = 10
+item_limit = 100
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = ExtResource( 1 )
+frame = 5
+playing = true
