@@ -20,6 +20,7 @@ max_speed = 100.0
 friction = 0.2
 gravity = 400.0
 resistance = 0.1
+ghostEffectMode = 2
 
 [node name="BreakingPlatform" parent="." instance=ExtResource( 3 )]
 position = Vector2( 192, 80 )

@@ -1,5 +1,7 @@
 extends Node
 
+class_name GlobalStatics
+
 # ---------------------------------------------------------------------------
 # GAME ENUMS
 # ---------------------------------------------------------------------------
@@ -15,6 +17,8 @@ enum eActionState { FIRE, THROW, USE }
 # Animation state
 enum eAnimationState { IDLE, WALK, JUMP, FALL, DIE, HURT, CLIMB, OBSTACLE, CRUNCH, CRUNCHWALK, WALLSLIDE, DASH, NONE }
 
+# GhostEffect modes
+enum eGhostEffectMode { ALWAYS, AIR, DASH, FALL, WALL }
 
 # ---------------------------------------------------------------------------
 # GAME data

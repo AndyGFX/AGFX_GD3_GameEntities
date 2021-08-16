@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "GlobalStatics",
+"language": "GDScript",
+"path": "res://Scripts/Globals.gd"
+}, {
 "base": "Area2D",
 "class": "ItemEntity",
 "language": "GDScript",
@@ -25,6 +30,7 @@ _global_script_classes=[ {
 "path": "res://Scripts/TilesetBuilder/TilesetBuilder.gd"
 } ]
 _global_script_class_icons={
+"GlobalStatics": "",
 "ItemEntity": "",
 "JSONBeautifier": "",
 "TilesetBuilder": ""

@@ -8,7 +8,8 @@ export(float) var jump = 150
 export(float) var wall_slide_speed = 20
 export(float) var resistance = 0.7
 export(float) var spring = 300
-export(bool) var ghostVFX = true
+export(bool) var useGhostEffect = true
+export(GlobalStatics.eGhostEffectMode) var ghostEffectMode = GlobalStatics.eGhostEffectMode.ALWAYS
 export(int) var maxJumpCount = 1
 export(bool) var wallSlide = true
 export(bool) var dash = true
@@ -39,8 +40,10 @@ var dashTimer = null
 func _ready():
 	
 	# prepare timer for ghost effect
-	if self.ghostVFX:
+	if self.useGhostEffect:
 		self.dashTimer = Utils.CreateTimer(0.1,self,"GhostEffect",false,true)
+	else:
+		self.dashTimer = Utils.CreateTimer(0.1,self,"GhostEffect",false,false)
 		
 	Globals.player = self
 	pass
@@ -138,11 +141,28 @@ func Dash()->void:
 # Ghost effect
 # ------------------------------------------------------------------------------
 func GhostEffect()->void:
-	var ghost = Globals.playerGhostVFX.instance();
-	get_parent().add_child(ghost)
-	ghost.position = position	
-	ghost.texture = $AnimatedSprite.frames.get_frame($AnimatedSprite.animation,$AnimatedSprite.frame)
-	ghost.flip_h = $AnimatedSprite.flip_h
+	var enabled:bool = false
+	
+	match (self.ghostEffectMode):
+		GlobalStatics.eGhostEffectMode.ALWAYS:
+			enabled = true
+			pass
+		GlobalStatics.eGhostEffectMode.WALL:
+			if self.isOnWall: enabled = true
+			pass
+		GlobalStatics.eGhostEffectMode.FALL:
+			if self.isOnAir: enabled = true
+			pass
+		GlobalStatics.eGhostEffectMode.DASH:
+			if self.isDashing : enabled = true
+			pass
+	
+	if enabled:
+		var ghost = Globals.playerGhostVFX.instance();
+		get_parent().add_child(ghost)
+		ghost.position = position	
+		ghost.texture = $AnimatedSprite.frames.get_frame($AnimatedSprite.animation,$AnimatedSprite.frame)
+		ghost.flip_h = $AnimatedSprite.flip_h
 	
 	
 
