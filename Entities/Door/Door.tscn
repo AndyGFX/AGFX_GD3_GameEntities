@@ -21,8 +21,8 @@ playing = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="EnterArea" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="EnterAreaTrigger" type="CollisionShape2D" parent="EnterArea"]
 position = Vector2( -0.148651, 3.19599 )
 shape = SubResource( 2 )

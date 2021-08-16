@@ -13,21 +13,19 @@ enum eMovementState { IDLE = 0,TO_LEFT = -1, TO_RIGHT=1, TO_UP = -1, TO_DOWN = 1
 enum eActionState { FIRE, THROW, USE }
 
 # Animation state
-enum eAnimationState { IDLE, WALK, JUMP, FALL, DIE, HURT, CLIMB, OBSTACLE, CRUNCH, CRUNCHWALK, WALLSLIDE, NONE }
+enum eAnimationState { IDLE, WALK, JUMP, FALL, DIE, HURT, CLIMB, OBSTACLE, CRUNCH, CRUNCHWALK, WALLSLIDE, DASH, NONE }
 
 
 # ---------------------------------------------------------------------------
 # GAME data
 # ---------------------------------------------------------------------------
-var coins = 0;
-var health = 0;
-var items = {};
 
 # ---------------------------------------------------------------------------
 # GAME COMMON prefabs 
 # ---------------------------------------------------------------------------
 
 const pickupVFX = preload("res://Entities/Items/PickupAnimation/PickedVFX.tscn")
+const playerGhostVFX = preload("res://Entities/Player/PlayerDushGhost.tscn")
 
 # ---------------------------------------------------------------------------
 # GAME Levels

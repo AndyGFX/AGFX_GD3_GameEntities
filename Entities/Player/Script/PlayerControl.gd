@@ -8,13 +8,14 @@ export(float) var jump = 150
 export(float) var wall_slide_speed = 20
 export(float) var resistance = 0.7
 export(float) var spring = 300
-export(Vector2) var velocity = Vector2.ZERO
-
+export(bool) var ghostVFX = true
 export(int) var maxJumpCount = 1
 export(bool) var wallSlide = true
+export(bool) var dash = true
+export(float) var dashImpulse = 1000
+export(float) var dashTime = 0.3
 
-
-
+var velocity:Vector2 = Vector2.ZERO
 var movement:float = 0
 var jumpCount:int = 0
 var isOnGround:bool = false
@@ -23,25 +24,32 @@ var isOnAir:bool = false
 var inCrunch:bool = false
 var inJumping:bool = false
 var inHurt:bool = false
-
+var dashDirection:Vector2 = Vector2.RIGHT
+var canDash:bool = true
+var isDashing:bool = false
 
 onready var sprite = $AnimatedSprite
 var animation_state = Globals.eAnimationState.IDLE
 var current_animation = Globals.eAnimationState.NONE
-
+var dashTimer = null
 
 # ------------------------------------------------------------------------------
 # On READY:
 # ------------------------------------------------------------------------------
 func _ready():
+	
+	# prepare timer for ghost effect
+	if self.ghostVFX:
+		self.dashTimer = Utils.CreateTimer(0.1,self,"GhostEffect",false,true)
+		
 	Globals.player = self
 	pass
 
 # ------------------------------------------------------------------------------
 # Apply impulse when player hit spring (called from SpringEntity)
 # ------------------------------------------------------------------------------
-func ApplySpring(value:float):	
-	velocity.y = -value 
+func ApplySpring(impulse:float):	
+	velocity.y = -impulse
 
 # ------------------------------------------------------------------------------
 # On UPDATE:
@@ -50,6 +58,10 @@ func _physics_process(delta):
 	
 	# ? input left/stand/right
 	self.movement = Input.get_action_strength("player_right") - Input.get_action_strength("player_left")
+	
+	# apply ghost effect whe is enable
+	
+	self.Dash()
 	
 	# if is LEFT/RIGHT key pressed
 	if !movement==0:
@@ -92,9 +104,47 @@ func _physics_process(delta):
 	self.isOnGround = self.is_on_floor()	
 	self.isOnWall = self.is_on_wall()
 	self.isOnAir = !self.is_on_floor()
-
+	
 	self.SetupMovementState()
 	self.PlayAnimation()
+	
+# ------------------------------------------------------------------------------
+# DASH VFX fro PLAYER
+# ------------------------------------------------------------------------------
+func Dash()->void:
+	if self.dash:
+		
+		if self.isOnGround:
+			self.canDash = true
+		
+		if Input.is_action_pressed("player_left"):
+			self.dashDirection = Vector2.LEFT
+		
+		if Input.is_action_pressed("player_right"):
+			self.dashDirection = Vector2.RIGHT
+		
+		if Input.is_action_just_pressed("player_dash") and self.canDash:
+			self.velocity = self.dashDirection*self.dashImpulse
+			self.canDash = false
+			self.isDashing = true
+			yield(get_tree().create_timer(self.dashTime),"timeout")
+			self.isDashing = false
+			
+			pass
+	pass
+
+
+# ------------------------------------------------------------------------------
+# Ghost effect
+# ------------------------------------------------------------------------------
+func GhostEffect()->void:
+	var ghost = Globals.playerGhostVFX.instance();
+	get_parent().add_child(ghost)
+	ghost.position = position	
+	ghost.texture = $AnimatedSprite.frames.get_frame($AnimatedSprite.animation,$AnimatedSprite.frame)
+	ghost.flip_h = $AnimatedSprite.flip_h
+	
+	
 
 # ------------------------------------------------------------------------------
 # Check an prepare movement state for play animation
@@ -122,11 +172,14 @@ func SetupMovementState():
 				if self.wallSlide: self.animation_state = Globals.eAnimationState.WALLSLIDE
 			else:
 				self.animation_state = Globals.eAnimationState.FALL
-			
+
 	if self.inJumping and self.velocity.y<0: 
 		self.animation_state = Globals.eAnimationState.JUMP
 	
 	if self.inHurt: self.animation_state = Globals.eAnimationState.HURT
+	
+	if self.isDashing:
+		self.animation_state = Globals.eAnimationState.DASH
 
 # ------------------------------------------------------------------------------
 # Play animation by state
@@ -140,6 +193,7 @@ func PlayAnimation():
 	if self.animation_state==Globals.eAnimationState.WALK: _anim_name = "Run"
 	if self.animation_state==Globals.eAnimationState.JUMP: _anim_name = "Jump"
 	if self.animation_state==Globals.eAnimationState.FALL: _anim_name = "Fall"
+	if self.animation_state==Globals.eAnimationState.DASH: _anim_name = "Dash"
 #	if self.animation_state==Globals.eAnimationState.HURT: _anim_name = "Hurt"
 	if self.animation_state==Globals.eAnimationState.CRUNCH: _anim_name = "Ducking"
 	if self.animation_state==Globals.eAnimationState.WALLSLIDE: _anim_name = "WallSlide"

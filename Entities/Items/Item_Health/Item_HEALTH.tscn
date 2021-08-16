@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 6.78731
 
-[node name="Item_HEALTH" type="Area2D"]
+[node name="ItemEntity_HEALTH" type="Area2D"]
 script = ExtResource( 2 )
 item_type = "HEALTH"
 item_amount = 10
@@ -17,5 +17,4 @@ shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = ExtResource( 1 )
-frame = 5
 playing = true
