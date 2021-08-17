@@ -16,6 +16,8 @@
 - jump (with flag for jump count)
 - wall sliding (on/off)
 - user defined movement parameters (speed, jump, gravity, friction, spring, ... )
+- player ghost effect with a few modes (ALWAYS, FALL, DASH, WALL)
+
 
 ## Breaking platfrom [File: Scenes/Demo_BreakingPlatfrom.tscn]
 
