@@ -6,7 +6,7 @@ export(float) var friction = 0.5
 export(float) var gravity = 300
 export(float) var jump = 150
 export(float) var wall_slide_speed = 20
-export(float) var resistance = 0.7
+
 export(float) var spring = 300
 export(bool) var useGhostEffect = true
 export(GlobalStatics.eGhostEffectMode) var ghostEffectMode = GlobalStatics.eGhostEffectMode.ALWAYS
@@ -33,7 +33,7 @@ onready var sprite = $AnimatedSprite
 var animation_state = Globals.eAnimationState.IDLE
 var current_animation = Globals.eAnimationState.NONE
 var dashTimer = null
-
+var speed_backup:float = 0
 # ------------------------------------------------------------------------------
 # On READY:
 # ------------------------------------------------------------------------------
@@ -45,6 +45,7 @@ func _ready():
 	else:
 		self.dashTimer = Utils.CreateTimer(0.1,self,"GhostEffect",false,false)
 		
+	self.speed_backup = self.max_speed
 	Globals.player = self
 	pass
 
@@ -62,16 +63,16 @@ func _physics_process(delta):
 	# ? input left/stand/right
 	self.movement = Input.get_action_strength("player_right") - Input.get_action_strength("player_left")
 	
-	# apply ghost effect whe is enable
-	
 	self.Dash()
 	
 	# if is LEFT/RIGHT key pressed
 	if !movement==0:
 		# increase move speed
-		velocity.x += self.movement*speed*delta
-		velocity.x = clamp(velocity.x,-max_speed,max_speed)	
+		if !self.isDashing:
+			velocity.x += self.movement*speed*delta
+		velocity.x = clamp(velocity.x,-max_speed,max_speed)
 		sprite.flip_h = self.movement < 0
+		
 	else:
 		# slow down when key isn't pressed
 		velocity.x = lerp(velocity.x,0,friction)
@@ -127,12 +128,13 @@ func Dash()->void:
 			self.dashDirection = Vector2.RIGHT
 		
 		if Input.is_action_just_pressed("player_dash") and self.canDash:
-			self.velocity = self.dashDirection*self.dashImpulse
+			self.velocity = self.dashDirection*self.dashImpulse			
+			self.max_speed = self.dashImpulse/3.0;
 			self.canDash = false
 			self.isDashing = true
 			yield(get_tree().create_timer(self.dashTime),"timeout")
 			self.isDashing = false
-			
+			self.max_speed = self.speed_backup
 			pass
 	pass
 
