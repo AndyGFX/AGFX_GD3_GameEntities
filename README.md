@@ -36,9 +36,9 @@
 - user defined spring impulse
 
 ## Open door with switch [File: Scene/Demo_SwitchAndDoor.tscn]
-- when player hit switch, opening animation start
+- when player hit switch, opening animation start and EnterAreaTrigger is enabled
 - EnterAreaTrigger is preset for user defined signal ...
-- connection between switch and door is visuali connected with line (in editot only)
+- connection between switch and door is connected with line (in editot only)
 
     
 

@@ -26,7 +26,6 @@ func BodyEnteregToSwitch(body):
 		$AnimatedSprite.play("IdleActive")		
 	else:
 		$AnimatedSprite.play("Idle")
-	print(body.name)
 
 
 # -------------------------------------------------------
