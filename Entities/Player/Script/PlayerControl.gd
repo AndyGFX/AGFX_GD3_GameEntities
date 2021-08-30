@@ -1,7 +1,8 @@
 extends KinematicBody2D
 
 export(float) var speed = 500
-export(float) var max_speed = 150
+export(float) var max_walk_speed = 50
+export(float) var max_run_speed = 100
 export(float) var friction = 0.5
 export(float) var gravity = 300
 export(float) var jump = 150
@@ -24,6 +25,7 @@ var isOnWall:bool = false
 var isOnAir:bool = false
 var inCrunch:bool = false
 var inJumping:bool = false
+var inRunning:bool = false
 var inHurt:bool = false
 var dashDirection:Vector2 = Vector2.RIGHT
 var canDash:bool = true
@@ -34,6 +36,8 @@ var animation_state = Globals.eAnimationState.IDLE
 var current_animation = Globals.eAnimationState.NONE
 var dashTimer = null
 var speed_backup:float = 0
+
+
 # ------------------------------------------------------------------------------
 # On READY:
 # ------------------------------------------------------------------------------
@@ -45,7 +49,7 @@ func _ready():
 	else:
 		self.dashTimer = Utils.CreateTimer(0.1,self,"GhostEffect",false,false)
 		
-	self.speed_backup = self.max_speed
+	self.speed_backup = self.max_walk_speed
 	Globals.player = self
 	pass
 
@@ -60,62 +64,21 @@ func ApplySpring(impulse:float):
 # ------------------------------------------------------------------------------
 func _physics_process(delta):
 	
-	# ? input left/stand/right
-	self.movement = Input.get_action_strength("player_right") - Input.get_action_strength("player_left")
-	
-	self.Dash()
-	
-	# if is LEFT/RIGHT key pressed
-	if !movement==0:
-		# increase move speed
-		if !self.isDashing:
-			velocity.x += self.movement*speed*delta
-		velocity.x = clamp(velocity.x,-max_speed,max_speed)
-		sprite.flip_h = self.movement < 0
-		
-	else:
-		# slow down when key isn't pressed
-		velocity.x = lerp(velocity.x,0,friction)
-	
-	# ? is on GROUND 
-	if self.isOnGround:
-		self.inJumping = false
-		self.jumpCount = self.maxJumpCount;
-		
-		# ? and is crunch key pressed ?
-		if Input.is_action_just_pressed("player_crunch"):
-			self.inCrunch = !self.inCrunch
-			pass
-			
-	# ? and is jump key pressed ?
-	if Input.is_action_just_pressed("player_jump"):
-		if (self.jumpCount>0):
-			self.inJumping = true
-			self.velocity.y -= self.jump
-			self.jumpCount -= 1
-	
-	# ? is on WALL 
-	if self.isOnWall and self.wallSlide:
-		if velocity.y>30:
-			velocity.y = self.wall_slide_speed
-	
-	# apply gravity
-	velocity.y += gravity*delta
-	
-	# MOVE and SLIDE
-	velocity = move_and_slide(velocity,Vector2.UP)
-
-	self.isOnGround = self.is_on_floor()	
-	self.isOnWall = self.is_on_wall()
-	self.isOnAir = !self.is_on_floor()
-	
-	self.SetupMovementState()
-	self.PlayAnimation()
+	self._Input()
+	self._Dash()
+	self._WalkAndRun(delta)
+	self._Crunch()
+	self._Jump()
+	self._WallSlide()
+	self._ApplyVelocity(delta)
+	self._SetCollisionStates()
+	self._SetMovementState()
+	self._PlayAnimationByState()
 	
 # ------------------------------------------------------------------------------
 # DASH VFX fro PLAYER
 # ------------------------------------------------------------------------------
-func Dash()->void:
+func _Dash()->void:
 	if self.dash:
 		
 		if self.isOnGround:
@@ -129,18 +92,18 @@ func Dash()->void:
 		
 		if Input.is_action_just_pressed("player_dash") and self.canDash:
 			self.velocity = self.dashDirection*self.dashImpulse			
-			self.max_speed = self.dashImpulse/3.0;
+			self.max_walk_speed = self.dashImpulse/3.0;
 			self.canDash = false
 			self.isDashing = true
 			yield(get_tree().create_timer(self.dashTime),"timeout")
 			self.isDashing = false
-			self.max_speed = self.speed_backup
+			self.max_walk_speed = self.speed_backup
 			pass
 	pass
 
 
 # ------------------------------------------------------------------------------
-# Ghost effect
+# Ghost effect - called from timer
 # ------------------------------------------------------------------------------
 func GhostEffect()->void:
 	var enabled:bool = false
@@ -168,10 +131,18 @@ func GhostEffect()->void:
 	
 	
 
+# ******************************************************************************
+# HELPERS
+# ******************************************************************************
+
+func _Input()->void:
+	# ? input left/stand/right
+	self.movement = Input.get_action_strength("player_right") - Input.get_action_strength("player_left")
+
 # ------------------------------------------------------------------------------
 # Check an prepare movement state for play animation
 # ------------------------------------------------------------------------------
-func SetupMovementState():
+func _SetMovementState():
 	
 # Set animation 
 	
@@ -207,7 +178,7 @@ func SetupMovementState():
 # Play animation by state
 # before you need call SetupMovementState method
 # ------------------------------------------------------------------------------
-func PlayAnimation():
+func _PlayAnimationByState():
 	
 	var _anim_name=""
 	
@@ -225,3 +196,56 @@ func PlayAnimation():
 		self.sprite.play(_anim_name)
 		self.current_animation = animation_state
 		
+func _WalkAndRun(delta)->void:
+	if !movement==0:
+		# increase move speed
+		if !self.isDashing:
+			velocity.x += self.movement*speed*delta
+		
+		if Input.is_action_pressed("player_run"):
+			velocity.x = clamp(velocity.x,-self.max_run_speed,self.max_run_speed)
+		else:
+			velocity.x = clamp(velocity.x,-self.max_walk_speed,self.max_walk_speed)
+		sprite.flip_h = self.movement < 0
+		
+	else:
+		# slow down when key isn't pressed
+		velocity.x = lerp(velocity.x,0,friction)
+
+func _Crunch()->void:
+	if self.isOnGround:
+		self.inJumping = false
+		self.jumpCount = self.maxJumpCount;
+		
+		# ? and is crunch key pressed ?
+		if Input.is_action_just_pressed("player_crunch"):
+			self.inCrunch = !self.inCrunch
+			pass	
+
+func _Jump()->void:
+	# ? and is jump key pressed ?
+	if Input.is_action_just_pressed("player_jump"):
+		if (self.jumpCount>0):
+			self.inJumping = true
+			self.velocity.y -= self.jump
+			self.jumpCount -= 1	
+
+func _WallSlide()->void:
+	# ? is on WALL 
+	if self.isOnWall and self.wallSlide:
+		if velocity.y>30:
+			velocity.y = self.wall_slide_speed
+	
+
+func _ApplyVelocity(delta)->void:
+		# apply gravity
+	velocity.y += gravity*delta
+	
+	# MOVE and SLIDE
+	velocity = move_and_slide(velocity,Vector2.UP)
+	
+func _SetCollisionStates()->void:
+	self.isOnGround = self.is_on_floor()	
+	self.isOnWall = self.is_on_wall()
+	self.isOnAir = !self.is_on_floor()
+	

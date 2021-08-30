@@ -10,6 +10,14 @@
     - res://Scripts/Utils/Utils.gd
     - res://Scripts/Utils/GameData.gd
 
+## Platform PLAYER control - keys
+- [Q] - sword attack
+- [W] - fire attack
+- [E] - use/activate
+- [D] - Dash
+- [C] - Crunch
+- [shift] - run
+- [<- , ->] - walk
 
 ## Platformer character controler [File: Scenes/DEMO_PlatfromerCharacter.tscn]
 - move left/right
