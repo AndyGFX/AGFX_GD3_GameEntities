@@ -11,9 +11,9 @@
     - res://Scripts/Utils/GameData.gd
 
 ## Platform PLAYER control - keys
-- [Q] - sword attack
-- [W] - fire attack
-- [E] - use/activate
+- [Q] - sword attack (W.I.P.)
+- [W] - fire attack (W.I.P.)
+- [E] - use/activate (W.I.P.)
 - [D] - Dash
 - [C] - Crunch
 - [shift] - run

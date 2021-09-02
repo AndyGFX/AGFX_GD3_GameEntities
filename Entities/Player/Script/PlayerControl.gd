@@ -164,10 +164,12 @@ func _SetMovementState():
 			if self.isOnWall:
 				if self.wallSlide: self.animation_state = Globals.eAnimationState.WALLSLIDE
 			else:
-				self.animation_state = Globals.eAnimationState.FALL
+				if !self.inCrunch:
+					self.animation_state = Globals.eAnimationState.FALL
 
-	if self.inJumping and self.velocity.y<0: 
-		self.animation_state = Globals.eAnimationState.JUMP
+	if self.inJumping and self.velocity.y<0:
+		if !self.inCrunch:
+			self.animation_state = Globals.eAnimationState.JUMP
 	
 	if self.inHurt: self.animation_state = Globals.eAnimationState.HURT
 	
@@ -220,7 +222,14 @@ func _Crunch()->void:
 		# ? and is crunch key pressed ?
 		if Input.is_action_just_pressed("player_crunch"):
 			self.inCrunch = !self.inCrunch
-			pass	
+			
+			if self.inCrunch:
+				$CollisionShape2D_CRUNCH.set_deferred("disabled",false)
+				$CollisionShape2D_WALK.set_deferred("disabled",true)
+			else:
+				$CollisionShape2D_CRUNCH.set_deferred("disabled",true)
+				$CollisionShape2D_WALK.set_deferred("disabled",false)
+
 
 func _Jump()->void:
 	# ? and is jump key pressed ?
