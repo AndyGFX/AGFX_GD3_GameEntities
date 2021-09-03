@@ -30,10 +30,6 @@ max_run_speed = 160.0
 useGhostEffect = false
 ghostEffectMode = 2
 
-[node name="Waypoints" parent="." instance=ExtResource( 5 )]
-position = Vector2( 360, 176 )
-line_width = 5.0
-
 [node name="Platform" parent="." instance=ExtResource( 4 )]
 position = Vector2( 40, 216 )
 editor_process = false
@@ -46,7 +42,34 @@ editor_process = false
 position = Vector2( 40, 152 )
 editor_process = false
 
-[node name="Platform-moving" parent="." instance=ExtResource( 4 )]
-position = Vector2( 379.334, 176 )
+[node name="MovingPlatform_001" type="Node2D" parent="."]
+position = Vector2( -16, -8 )
+
+[node name="Platform-moving" parent="MovingPlatform_001" instance=ExtResource( 4 )]
+position = Vector2( 327.999, 168 )
+editor_process = false
 speed = 50.0
 waypoints_path = NodePath("../Waypoints")
+
+[node name="Waypoints" parent="MovingPlatform_001" instance=ExtResource( 5 )]
+position = Vector2( 360, 176 )
+editor_process = false
+
+[node name="MovingPlatform_002" type="Node2D" parent="."]
+
+[node name="Waypoints2" parent="MovingPlatform_002" instance=ExtResource( 5 )]
+position = Vector2( 360, 112 )
+
+[node name="Start" parent="MovingPlatform_002/Waypoints2" index="0"]
+position = Vector2( -64, -16 )
+
+[node name="1" parent="MovingPlatform_002/Waypoints2" index="1"]
+position = Vector2( 8, -56 )
+
+[node name="Platform" parent="MovingPlatform_002" instance=ExtResource( 4 )]
+position = Vector2( 296, 96 )
+speed = 50.0
+waypoints_path = NodePath("../Waypoints2")
+
+[editable path="MovingPlatform_002/Waypoints2"]
+[editable path="MovingPlatform_002/Platform"]

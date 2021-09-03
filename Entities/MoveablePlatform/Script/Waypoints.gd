@@ -18,6 +18,26 @@ func _process(delta: float) -> void:
 	update()
 
 
+#func _draw() -> void:
+#	if not Engine.editor_hint:
+#		return
+#	if not get_child_count() > 1:
+#		return
+#	var points: = PoolVector2Array()
+#	var triangles: = []
+#	var last_point: = Vector2.ZERO
+#	for child in get_children():
+#		points.append(child.position)
+#		if points.size() > 1:
+#			var center: Vector2 = (child.position + last_point) / 2
+#			var angle: = last_point.angle_to_point(child.position)
+#			triangles.append({center=center, angle=angle})
+#		last_point = child.position
+#	points.append(get_child(0).position)
+#
+#	#draw_polyline(points, line_color, line_width, true)
+#	self.draw_line(p_from,p_to,Color.green,1,true)
+
 func _draw() -> void:
 	if not Engine.editor_hint:
 		return
@@ -36,6 +56,8 @@ func _draw() -> void:
 	points.append(get_child(0).position)
 	
 	draw_polyline(points, line_color, line_width, true)
+	#self.draw_line(p_from,p_to,Color.green,1,true)
+	
 	for triangle in triangles:
 		draw_triangle(triangle['center'], triangle['angle'], line_width * 2.0)
 
