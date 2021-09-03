@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Entities/MoveablePlatform/Script/Waypoints.gd" type="Script" id=1]
+[ext_resource path="res://Entities/MoveablePlatform/Sprite/MoveablePlatform.png" type="Texture" id=2]
+[ext_resource path="res://Entities/MoveablePlatform/Script/MovingPlatform.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 24, 8 )
+
+[node name="MovingPlatform" type="Node2D"]
+
+[node name="Waypoints" type="Node2D" parent="."]
+script = ExtResource( 1 )
+line_width = 2.0
+
+[node name="Start" type="Position2D" parent="Waypoints"]
+position = Vector2( -64, 0 )
+
+[node name="1" type="Position2D" parent="Waypoints"]
+position = Vector2( 64, 0 )
+
+[node name="Platform" type="KinematicBody2D" parent="."]
+position = Vector2( 64, 0 )
+script = ExtResource( 3 )
+waypoints_path = NodePath("../Waypoints")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform"]
+shape = SubResource( 1 )
+one_way_collision = true
+
+[node name="Sprite" type="Sprite" parent="Platform"]
+texture = ExtResource( 2 )
+
+[node name="Timer" type="Timer" parent="Platform"]
+
+[connection signal="timeout" from="Platform/Timer" to="Waypoints" method="_on_Timer_timeout"]

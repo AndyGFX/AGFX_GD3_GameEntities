@@ -39,7 +39,7 @@ _global_script_class_icons={
 [application]
 
 config/name="AGFX_GD3_GameEntities"
-run/main_scene="res://Main.tscn"
+run/main_scene="res://Scene/DEMO_MoveablePlatform.tscn"
 config/icon="res://icon.png"
 
 [autoload]
