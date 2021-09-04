@@ -2,11 +2,13 @@
 
 importer="aseprite.wizard.plugin"
 type="SpriteFrames"
-valid=false
+path="res://.import/MoveablePlatform.aseprite-16bbb7fb3d1750d3f599879fe6b53fd3.res"
 
 [deps]
 
 source_file="res://Entities/MoveablePlatform/Sprite/MoveablePlatform.aseprite"
+dest_files=[ "res://.import/MoveablePlatform.aseprite-16bbb7fb3d1750d3f599879fe6b53fd3.res" ]
+
 [params]
 
 split_layers=false

@@ -247,7 +247,8 @@ func _WallSlide()->void:
 	
 
 func _ApplyVelocity(delta)->void:
-		# apply gravity
+	
+	# apply gravity
 	velocity.y += gravity*delta
 	
 	# MOVE and SLIDE

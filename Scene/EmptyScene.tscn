@@ -23,3 +23,7 @@ tile_data = PoolIntArray( -65538, 0, 262147, -65537, 0, 262145, -131072, 0, 2621
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 200, 112 )
+speed = 350.0
+friction = 0.2
+gravity = 400.0
+dashTime = 0.2

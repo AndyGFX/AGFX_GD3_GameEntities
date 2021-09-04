@@ -19,7 +19,7 @@ func _ready() -> void:
 	
 	position = waypoints.get_start_position()
 	target_position = waypoints.get_next_point_position()
-	self.connect("timeout" , $Timer, "_on_Timer_timeout")
+	
 
 
 func _physics_process(delta: float) -> void:
@@ -48,10 +48,6 @@ func set_editor_process(value:bool) -> void:
 		return
 	if waypoints:
 		set_physics_process(value)
-
-#set_physics_process(true)
-
-
 
 
 func _on_Timer_timeout():
