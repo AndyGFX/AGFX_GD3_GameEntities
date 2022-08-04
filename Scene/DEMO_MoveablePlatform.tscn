@@ -3,8 +3,12 @@
 [ext_resource path="res://TileSet/ProrotypeTilsets.tres" type="TileSet" id=1]
 [ext_resource path="res://Entities/Player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/Managers/GameManager.gd" type="Script" id=3]
-[ext_resource path="res://Entities/MoveablePlatform/UniversalPlatform.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Entities/MoveablePlatform/Waypoints.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Entities/MoveablePlatform/MovingPlatform.tscn" type="PackedScene" id=4]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -48, 0, 0, 0, 0, 0, 56, 0 )
+}
 
 [node name="EmptyScene" type="Node2D"]
 script = ExtResource( 3 )
@@ -30,50 +34,9 @@ max_walk_speed = 80.0
 max_run_speed = 160.0
 friction = 0.2
 gravity = 400.0
-useGhostEffect = false
-ghostEffectMode = 2
+maxJumpCount = 2
 dashTime = 0.2
 
-[node name="Platform" parent="." instance=ExtResource( 4 )]
-position = Vector2( 40, 216 )
-editor_process = false
-
-[node name="Platform2" parent="." instance=ExtResource( 4 )]
-position = Vector2( 40, 184 )
-editor_process = false
-
-[node name="Platform3" parent="." instance=ExtResource( 4 )]
-position = Vector2( 40, 152 )
-editor_process = false
-
-[node name="MovingPlatform_001" type="Node2D" parent="."]
-position = Vector2( -16, -8 )
-
-[node name="Platform-moving" parent="MovingPlatform_001" instance=ExtResource( 4 )]
-position = Vector2( 319.167, 168 )
-editor_process = false
-speed = 50.0
-waypoints_path = NodePath("../Waypoints")
-
-[node name="Waypoints" parent="MovingPlatform_001" instance=ExtResource( 5 )]
-position = Vector2( 360, 176 )
-editor_process = false
-
-[node name="MovingPlatform_002" type="Node2D" parent="."]
-
-[node name="Waypoints2" parent="MovingPlatform_002" instance=ExtResource( 5 )]
-position = Vector2( 360, 112 )
-
-[node name="Start" parent="MovingPlatform_002/Waypoints2" index="0"]
-position = Vector2( -152, 56 )
-
-[node name="1" parent="MovingPlatform_002/Waypoints2" index="1"]
-position = Vector2( 8, -56 )
-
-[node name="Platform" parent="MovingPlatform_002" instance=ExtResource( 4 )]
-position = Vector2( 352.731, 66.6883 )
-speed = 50.0
-waypoints_path = NodePath("../Waypoints2")
-
-[editable path="MovingPlatform_002/Waypoints2"]
-[editable path="MovingPlatform_002/Platform"]
+[node name="MovingPlatform" parent="." instance=ExtResource( 4 )]
+position = Vector2( 336, 160 )
+curve = SubResource( 1 )

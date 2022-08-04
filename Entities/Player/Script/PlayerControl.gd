@@ -43,11 +43,16 @@ var speed_backup:float = 0
 # ------------------------------------------------------------------------------
 func _ready():
 	
+	var repeat_time:float = 0.1
+	
+	if (self.ghostEffectMode == GlobalStatics.eGhostEffectMode.DASH):
+		repeat_time = 0.025
+		
 	# prepare timer for ghost effect
 	if self.useGhostEffect:
-		self.dashTimer = Utils.CreateTimer(0.1,self,"GhostEffect",false,true)
+		self.dashTimer = Utils.CreateTimer(repeat_time,self,"GhostEffect",false,true)
 	else:
-		self.dashTimer = Utils.CreateTimer(0.1,self,"GhostEffect",false,false)
+		self.dashTimer = Utils.CreateTimer(repeat_time,self,"GhostEffect",false,false)
 		
 	self.speed_backup = self.max_walk_speed
 	Globals.player = self
