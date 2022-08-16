@@ -9,7 +9,7 @@ class_name GlobalStatics
 # Movement facing state
 enum eFacing { TO_LEFT, TO_RIGHT}
 
-enum eMovementState { IDLE = 0,TO_LEFT = -1, TO_RIGHT=1, TO_UP = -1, TO_DOWN = 1, FALLING = 1, JUMP = -1 }
+enum eMovementState { IDLE = 0,TO_LEFT = -1, TO_RIGHT=1, TO_UP = -1, TO_DOWN = 1, FALLING = 1, JUMP = -1, MOVE = 2, CLIMB =3 }
 
 # Action state
 enum eActionState { FIRE, THROW, USE }

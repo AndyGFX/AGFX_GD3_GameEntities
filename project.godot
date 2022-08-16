@@ -24,6 +24,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Utils/json_beautifier.gd"
 }, {
+"base": "Area2D",
+"class": "Ladder",
+"language": "GDScript",
+"path": "res://Entities/Ladder/Scripts/Ladder.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Entities/Player/Script/PlayerControl.gd"
+}, {
 "base": "Reference",
 "class": "TilesetBuilder",
 "language": "GDScript",
@@ -33,6 +43,8 @@ _global_script_class_icons={
 "GlobalStatics": "",
 "ItemEntity": "",
 "JSONBeautifier": "",
+"Ladder": "",
+"Player": "",
 "TilesetBuilder": ""
 }
 

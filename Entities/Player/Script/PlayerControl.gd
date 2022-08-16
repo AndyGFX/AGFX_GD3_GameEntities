@@ -1,4 +1,6 @@
 extends KinematicBody2D
+class_name Player
+
 
 export(float) var speed = 500
 export(float) var max_walk_speed = 50
@@ -19,6 +21,7 @@ export(float) var dashTime = 0.3
 
 var velocity:Vector2 = Vector2.ZERO
 var movement:float = 0
+var climb_movement:float = 0
 var jumpCount:int = 0
 var isOnGround:bool = false
 var isOnWall:bool = false
@@ -26,6 +29,7 @@ var isOnAir:bool = false
 var inCrunch:bool = false
 var inJumping:bool = false
 var inRunning:bool = false
+var isOnLadder:bool = false
 var inHurt:bool = false
 var dashDirection:Vector2 = Vector2.RIGHT
 var canDash:bool = true
@@ -36,7 +40,8 @@ var animation_state = Globals.eAnimationState.IDLE
 var current_animation = Globals.eAnimationState.NONE
 var dashTimer = null
 var speed_backup:float = 0
-
+var movement_state = Globals.eMovementState.MOVE
+onready var ladder_check = $LadderCheck
 
 # ------------------------------------------------------------------------------
 # On READY:
@@ -70,11 +75,11 @@ func ApplySpring(impulse:float):
 func _physics_process(delta):
 	
 	self._Input()
-	self._Dash()
-	self._WalkAndRun(delta)
-	self._Crunch()
-	self._Jump()
-	self._WallSlide()
+	
+	match self.movement_state:
+		Globals.eMovementState.MOVE: self.move_state(delta)
+		Globals.eMovementState.CLIMB: self.climb_state(delta)
+	
 	self._ApplyVelocity(delta)
 	self._SetCollisionStates()
 	self._SetMovementState()
@@ -143,6 +148,8 @@ func GhostEffect()->void:
 func _Input()->void:
 	# ? input left/stand/right
 	self.movement = Input.get_action_strength("player_right") - Input.get_action_strength("player_left")
+	self.climb_movement = Input.get_action_strength("player_down") - Input.get_action_strength("player_up")
+	
 
 # ------------------------------------------------------------------------------
 # Check an prepare movement state for play animation
@@ -219,7 +226,21 @@ func _WalkAndRun(delta)->void:
 		# slow down when key isn't pressed
 		velocity.x = lerp(velocity.x,0,friction)
 
+func _ClimbLadder(delta)->void:
+	
+	if (self.isOnLadder):
+		velocity.y = 0
+		velocity.x = 0
+		
+	if ((self.isOnLadder) && (!self.climb_movement==0)):
+		velocity.x = 0
+		velocity.y = self.climb_movement*self.max_walk_speed
+		pass
+	pass
+	
+	
 func _Crunch()->void:
+	
 	if self.isOnGround:
 		self.inJumping = false
 		self.jumpCount = self.maxJumpCount;
@@ -251,16 +272,48 @@ func _WallSlide()->void:
 			velocity.y = self.wall_slide_speed
 	
 
-func _ApplyVelocity(delta)->void:
-	
+func _ApplyGravity(delta)->void:
 	# apply gravity
 	velocity.y += gravity*delta
-	
+	pass
+
+func _ApplyVelocity(delta)->void:	
 	# MOVE and SLIDE
 	velocity = move_and_slide(velocity,Vector2.UP)
+
+func _is_on_ladder()->bool:
+	if not ladder_check.is_colliding(): return false
+	var collider = ladder_check.get_collider()
+	if not collider is Ladder: return false
+	print("On Ladder ...")
+	return true
 	
 func _SetCollisionStates()->void:
-	self.isOnGround = self.is_on_floor()	
+	self.isOnLadder = self._is_on_ladder()
+	self.isOnGround = self.is_on_floor()
 	self.isOnWall = self.is_on_wall()
 	self.isOnAir = !self.is_on_floor()
 	
+	
+	
+func climb_state(delta)->void:
+	
+	if not self.isOnLadder:
+		self.movement_state = Globals.eMovementState.MOVE
+	
+	self._ClimbLadder(delta)	
+	pass
+	
+func move_state(delta)->void:
+	
+	if self.isOnLadder and Input.is_action_pressed("player_up"):
+		self.movement_state = Globals.eMovementState.CLIMB
+		
+	self._Dash()
+	self._WalkAndRun(delta)
+	self._Crunch()
+	self._Jump()
+	self._WallSlide()
+	self._ApplyGravity(delta)
+	
+
